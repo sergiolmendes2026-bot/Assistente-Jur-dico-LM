@@ -7,6 +7,12 @@
 	• 📫 Como me encontrar: sergiolmendes2026@gmail.com
 
 
+Confira meu projeto publicado com Streamlit:
+
+📊 https://assistente-jur-dico-lm.streamlit.app/
+
+
+
 
 
 ## ⚖️ Assistente Jurídico com RAG
