@@ -7,7 +7,7 @@
 	• 📫 Como me encontrar: sergiolmendes2026@gmail.com
 
 
-Confira meu projeto publicado com Streamlit Community Cloud:
+Confira meu projeto publicado com **Streamlit Community Cloud**:
 
  
 
