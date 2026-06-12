@@ -26,7 +26,7 @@ Este projeto incorpora um pipeline de **RAG (Retrieval-Augmented Generation)**, 
 Em muitas empresas, pode ser necessário consultar documentos internos. 
 É exatamente nesse cenário que o RAG se torna útil: ele funciona como uma infraestrutura de backend, semelhante a um banco de dados, rodando nos servidores da organização.  
 Ao configurar a **API Key**, o sistema ativa automaticamente a caixa de entrada para o usuário digitar sua mensagem e também o campo para upload de documentos em PDF.
-A ferramenta indentifica informações necessárias, ajuda ajuda no enquadramento regulatorio reuzindo o tempo de análise.
+A ferramenta indentifica informações necessárias, ajuda no enquadramento regulatorio reuzindo o tempo de análise.
 
 ### 🛠️ Configuração
 Nesta aplicação, configurei o RAG para trabalhar exclusivamente com documentos PDF.  
