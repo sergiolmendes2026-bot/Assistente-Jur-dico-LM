@@ -7,7 +7,9 @@
 	• 📫 Como me encontrar: sergiolmendes2026@gmail.com
 
 
-Confira meu projeto publicado com Streamlit:
+Confira meu projeto publicado com Streamlit Community Cloud:
+
+ 
 
 📊 https://assistente-jur-dico-lm.streamlit.app/
 
