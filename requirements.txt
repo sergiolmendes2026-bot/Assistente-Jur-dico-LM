@@ -1,4 +1,11 @@
-aiohappyeyeballs
+langchain
+langchain-community
+langchain-groq
+langchain-huggingface
+chromadb
+unstructured
+unstructured[docx]
+unstructured[pdf]aiohappyeyeballs
 aiohttp
 aiosignal
 altair
