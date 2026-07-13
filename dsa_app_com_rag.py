@@ -26,7 +26,8 @@ if not api_key:
     st.stop()
 
 os.environ["GROQ_API_KEY"] = api_key
-llm = ChatGroq(model="llama-3.1-70b-versatile", temperature=0.2)
+# O modelo 'llama-3.3-70b-versatile' é o sucessor recomendado atualmente
+llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.2)
 
 # Upload de Arquivos
 uploaded_files = st.file_uploader("Envie documentos (PDF, Word, TXT, Excel)", accept_multiple_files=True, type=["pdf", "docx", "txt", "xlsx"])
