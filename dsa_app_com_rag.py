@@ -10,31 +10,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
 # Importando loaders específicos (estáveis)
-from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
-
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-st.set_page_config(page_title="Assistente Jurídico LM", layout="wide")
-st.markdown("## ⚖️ Assistente Jurídico LM")
-
-with st.sidebar:
-    api_key = st.text_input("GROQ API Key", type="password")
-
-if not api_key:
-    st.warning("Informe a GROQ API Key.")
-    st.stop()
-os.environ["GROQ_API_KEY"] = api_key
-
-llm = ChatGroq(model="llama-3.1-70b-versatile", temperature=0.2)
-
-uploaded_files = st.file_uploader(
-    "Envie seus documentos (PDF, Word, TXT)", 
-    type=["pdf", "docx", "txt"], 
-    accept_multiple_files=True,
-    key="uploader_v2"
-)
-
-if "chroma_dir" not in st.session_state:
-    st.session_state.chroma_dir = tempfile.mkdtemp()
+from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader, UnstructuredExcelLoader
 
 def processar_arquivos(files):
     docs = []
@@ -51,6 +27,8 @@ def processar_arquivos(files):
             loader = Docx2txtLoader(tmp_path)
         elif ext == ".txt":
             loader = TextLoader(tmp_path, encoding='utf-8')
+        elif ext in [".xlsx", ".xls"]:
+            loader = UnstructuredExcelLoader(tmp_path)
         else:
             continue
             
