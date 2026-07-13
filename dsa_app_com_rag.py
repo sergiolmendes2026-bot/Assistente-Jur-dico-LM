@@ -10,29 +10,31 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader, UnstructuredExcelLoader
 
+# Configuração da Página
 st.set_page_config(page_title="Assistente Jurídico LM", layout="wide")
 
-# Barra Lateral
+# Barra Lateral - Design Solicitado
 with st.sidebar:
     st.header("Configurações")
-    api_key = st.text_input("GROQ API Key", type="password")
+    api_key = st.text_input("Coloque aqui sua GROQ API Key e pressione Enter", type="password")
     st.markdown("---")
     st.header("Instruções")
     st.markdown("1. Informe sua chave.\n2. Faça o upload dos arquivos.\n3. Pergunte.")
     st.warning("Aviso: a IA pode cometer erros.")
+    if st.button("📧 Clique Aqui Se Precisar de Suporte"):
+        st.write("Suporte: suporte@seuemail.com")
 
 if not api_key:
-    st.warning("Informe a GROQ API Key na barra lateral.")
+    st.markdown("# ⚖️ Assistente Jurídico")
+    st.warning("Informe a GROQ API Key na barra lateral para continuar.")
     st.stop()
 
 os.environ["GROQ_API_KEY"] = api_key
-# O modelo 'llama-3.3-70b-versatile' é o sucessor recomendado atualmente
+# Modelo atualizado e disponível
 llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.2)
 
-# Upload de Arquivos
+st.markdown("# ⚖️ Assistente Jurídico")
 uploaded_files = st.file_uploader("Envie documentos (PDF, Word, TXT, Excel)", accept_multiple_files=True, type=["pdf", "docx", "txt", "xlsx"])
-
-if "db" not in st.session_state: st.session_state.db = None
 
 def processar_arquivos(arquivos):
     docs = []
@@ -57,25 +59,18 @@ if uploaded_files and st.button("Processar Arquivos"):
         st.session_state.db = processar_arquivos(uploaded_files)
         st.success("Arquivos prontos!")
 
-# Chat
-if st.session_state.db:
-    pergunta = st.text_area("Escreva sua pergunta jurídica")
+if "db" in st.session_state and st.session_state.db:
+    pergunta = st.text_area("Escreva sua pergunta jurídica", placeholder="Ex.: Quais cláusulas tratam de rescisão e multas?")
     if st.button("Perguntar"):
-        if not pergunta.strip():
-            st.error("Por favor, digite uma pergunta.")
-        else:
-            retriever = st.session_state.db.as_retriever()
-            # O erro de BadRequest muitas vezes vem de contexto vazio ou prompt mal montado
-            template = """Use o contexto fornecido para responder à pergunta. Se não souber, diga que não sabe.
-            Contexto: {context}
-            Pergunta: {question}"""
-            chain = (
-                {"context": retriever | (lambda d: "\n\n".join([doc.page_content for doc in d])), "question": RunnablePassthrough()}
-                | ChatPromptTemplate.from_template(template)
-                | llm
-                | StrOutputParser()
-            )
-            try:
-                st.write(chain.invoke(pergunta))
-            except Exception as e:
-                st.error(f"Erro ao consultar IA: {e}")
+        retriever = st.session_state.db.as_retriever()
+        template = "Responda baseando-se no contexto: {context}\n\nPergunta: {question}"
+        chain = (
+            {"context": retriever | (lambda d: "\n\n".join([doc.page_content for doc in d])), "question": RunnablePassthrough()}
+            | ChatPromptTemplate.from_template(template)
+            | llm
+            | StrOutputParser()
+        )
+        try:
+            st.write(chain.invoke(pergunta))
+        except Exception as e:
+            st.error(f"Erro na consulta: {e}")
