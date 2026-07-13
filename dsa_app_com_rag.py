@@ -22,7 +22,7 @@ with st.sidebar:
     st.markdown("1. Informe sua chave.\n2. Faça o upload dos arquivos.\n3. Pergunte.")
     st.warning("Aviso: a IA pode cometer erros.")
     if st.button("📧 Clique Aqui Se Precisar de Suporte"):
-        st.write("Suporte: suporte@seuemail.com")
+        st.write("Suporte: sergiolmendes2026@gmail.com")
 
 if not api_key:
     st.markdown("# ⚖️ Assistente Jurídico")
