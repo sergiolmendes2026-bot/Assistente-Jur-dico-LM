@@ -7,4 +7,4 @@ chromadb
 pypdf
 python-docx
 docx2txt
-openpyxl
+sentence-transformers
