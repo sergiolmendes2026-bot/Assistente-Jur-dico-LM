@@ -3,7 +3,6 @@ import tempfile
 import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.messages import SystemMessage
 from langchain_community.document_loaders import UnstructuredFileLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -16,7 +15,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 # Configuração da página
 st.set_page_config(page_title="Assistente Jurídico LM", layout="wide")
-st.markdown("<div class='title'>⚖️ Assistente Jurídico LM</div>", unsafe_allow_html=True)
+st.markdown("## ⚖️ Assistente Jurídico LM")
 
 # Sidebar
 with st.sidebar:
@@ -32,11 +31,12 @@ os.environ["GROQ_API_KEY"] = api_key
 # Inicializa o modelo
 llm = ChatGroq(model="llama-3.1-70b-versatile", temperature=0.2)
 
-# Uploader de arquivos (agora aceita múltiplos formatos)
+# Uploader de arquivos (agora com KEY para forçar atualização da interface)
 uploaded_files = st.file_uploader(
-    "Envie seus documentos jurídicos", 
+    "Envie seus documentos (PDF, Word, TXT, Excel, CSV)", 
     type=["pdf", "docx", "txt", "xlsx", "csv"], 
-    accept_multiple_files=True
+    accept_multiple_files=True,
+    key="uploader_versao_2" 
 )
 
 if "chroma_dir" not in st.session_state:
