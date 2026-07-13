@@ -27,7 +27,7 @@ with st.sidebar:
     st.warning("Aviso: a IA pode cometer erros. Verifique fatos críticos.")
     
     if st.button("📧 Clique Aqui Se Precisar de Suporte"):
-        st.write("Suporte: [seu-email@exemplo.com]")
+        st.write("Suporte: [sergiolmendes2026@gmail.com]")
 
 # Validação da API
 if not api_key:
